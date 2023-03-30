@@ -31,7 +31,7 @@ Outside of updating the `creds` and `.env` file, everything can be setup and run
 #### Testing
 
 1. Setup python virtual environment: `make setup-python`
-2. Run tests: `make test`
+2. Run tests: `make pytest`
 
 #### Running app on host machine
 
