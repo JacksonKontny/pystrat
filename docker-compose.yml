@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: medstrat_web
+    command: make run
+    volumes:
+      - .:/app
+    ports:
+      - 5000:5000
+    expose:
+      - 5000
+    env_file:
+      - .env
+    environment:
+      FLASK_APP: ./src/app.py
+      FLASK_DEBUG: 1
+    depends_on:
+      - redis
+      - db
+
+  db:
+    image: postgres:14-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=medstrat
+      - POSTGRES_USER=medstrat
+      - POSTGRES_PASSWORD=passw0rd
+
+  redis:
+    image: redis:7-alpine
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: medstrat_celery_worker
+    command: make celery-worker-start
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    environment:
+      FLASK_APP: ./src/app.py
+      FLASK_DEBUG: 1
+    depends_on:
+      - redis
+      - db
+
+volumes:
+  postgres_data:
