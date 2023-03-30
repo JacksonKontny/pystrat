@@ -26,7 +26,7 @@ Outside of updating the `creds` and `.env` file, everything can be setup and run
    the `OVERRIDE` section of the `.env` file. Account credentials will need ability to upload files to Google Cloud
    Storage. Credentials file should be downloaded and stored in `/creds/google-account-creds.json`.
 2. Start the server in docker (preferred): `make run-docker`
-3. Backup service is located at `localhost:5000/backup`
+3. After starting the server, the UI can be accessed at `http://127.0.0.1:5000/backup`.
 
 #### Testing
 
@@ -36,5 +36,3 @@ Outside of updating the `creds` and `.env` file, everything can be setup and run
 #### Running app on host machine
 
 To start the server locally (use at your own risk): `make run-local`
-
-After starting the server, the UI can be accessed at `http://127.0.0.1:5000/`.
