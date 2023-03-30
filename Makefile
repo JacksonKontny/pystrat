@@ -2,10 +2,15 @@ PYTHONPATH=$(shell pwd)/src
 
 .EXPORT_ALL_VARIABLES:
 
-# Python Commands
+# Testing
 
-test:
-	pytest -v test/unit/test_*.py
+pytest:
+	pytest -v
+
+# Docker / commands used by docker-compose
+
+run-docker:
+	docker-compose up -d
 
 run:
 	flask --app ./src/app.py --debug run --host=0.0.0.0
@@ -14,19 +19,18 @@ CELERY_OPTIONS ?=
 celery-worker-start:
 	celery -A app.celery worker --loglevel=info $(CELERY_OPTIONS)
 
-
-# Docker commands
-
-run-docker:
-	docker-compose up -d
-
-# Local commands
+# Local environment commands
 
 db-start:
 	docker run -d -it --rm --name postgres -p 5432:5432 postgres
 
 redis-start:
 	docker run -d -it --rm --name redis -p 6379:6379 redis
+
+setup-python:
+	python3 -m venv .venv
+	source .venv/bin/activate
+	pip install -r ./python-requirements/requirements-test.txt
 
 run-local:
 	make redis-start

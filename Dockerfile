@@ -18,7 +18,7 @@ RUN apt-get update \
 ARG CACHE_BUST=1
 
 # Requirements are installed here to ensure they will be cached.
-COPY ./requirements.txt /requirements.txt
+COPY ./python-requirements/requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 
 WORKDIR /app
